@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시판 목록</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<h1>게시글 목록</h1>
+<div th:if="${message}" class="alert alert-success" role="alert" style="margin-bottom: 15px; padding: 10px; background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; border-radius: 4px;">
+    <p th:text="${message}"></p>
+</div>
+
+<table border="1"> <!-- 간단한 테이블 스타일 -->
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th>작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${!posts.isEmpty()}" th:each="post, stat : ${posts}">
+        <td th:text="${stat.count}">1</td>
+        <td>
+            <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">게시글 제목</a>
+        </td>
+        <td th:text="${post.author}">작성자 이름</td>
+        <td th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">2023-01-01 10:00</td>
+    </tr>
+
+    <tr th:unless="${!posts.isEmpty()}">
+        <td colspan="4">게시글이 없습니다.</td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+
+<button type="button" onclick="location.href='/posts/new'">새 글 작성</button>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 수정</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <style>
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .form-group input[type="text"],
+        .form-group input[type="password"],
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .button-group { margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<h1>게시글 수정</h1>
+<div th:if="${errorMessage}" class="alert alert-danger" role="alert" style="margin-bottom: 15px; padding: 10px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; border-radius: 4px;">
+    <p th:text="${errorMessage}"></p>
+</div>
+<form th:action="@{/posts/{id}(id=${postId})}" th:object="${editForm}" method="post">
+
+    <div class="form-group">
+        <label for="title">제목</label>
+        <input type="text" id="title" th:field="*{title}" required>
+    </div>
+
+    <div class="form-group">
+        <label for="author">작성자</label>
+        <input type="text" id="author" th:field="*{author}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="content">내용</label>
+        <textarea id="content" th:field="*{content}" rows="10" required></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="password">비밀번호 확인</label>
+        <input type="password" id="password" name="password" placeholder="수정을 위해 비밀번호 입력" required>
+        <!-- required 를 추가하여 비밀번호 입력 강제 -->
+    </div>
+
+    <div class="button-group">
+        <button type="submit">수정 완료</button>
+        <button type="button" th:onclick="|location.href='@{/posts/{id}(id=${postId})}'|">취소</button>
+    </div>
+
+</form>
+
+</body>
+</html>
